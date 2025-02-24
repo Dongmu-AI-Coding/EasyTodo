@@ -4,6 +4,9 @@ import React, { useState } from 'react';
 import { useTodo } from '@/context/TodoContext';
 import { TodoType } from '@/types/todo';
 import { PlusCircle, Trash2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Checkbox } from '@/components/ui/checkbox';
 
 interface TodoListProps {
   type: TodoType;
@@ -25,50 +28,48 @@ export const TodoList: React.FC<TodoListProps> = ({ type, title }) => {
   };
 
   return (
-    <div className="w-full max-w-md p-4 bg-white rounded-lg shadow-md">
+    <div className="w-full max-w-md p-6 bg-card rounded-lg border shadow-sm">
       <h2 className="text-xl font-bold mb-4">{title}</h2>
       
       <form onSubmit={handleSubmit} className="flex gap-2 mb-4">
-        <input
+        <Input
           type="text"
           value={newTodo}
           onChange={(e) => setNewTodo(e.target.value)}
-          className="flex-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="添加新任务..."
+          className="flex-1"
         />
-        <button
-          type="submit"
-          className="p-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          <PlusCircle className="w-6 h-6" />
-        </button>
+        <Button type="submit" size="icon">
+          <PlusCircle className="h-5 w-5" />
+        </Button>
       </form>
 
       <ul className="space-y-2">
         {filteredTodos.map((todo) => (
           <li
             key={todo.id}
-            className="flex items-center gap-2 p-2 hover:bg-gray-50 rounded-md"
+            className="flex items-center gap-3 p-2 hover:bg-accent/50 rounded-md group"
           >
-            <input
-              type="checkbox"
+            <Checkbox
               checked={todo.isCompleted}
-              onChange={() => toggleTodo(todo.id)}
-              className="w-5 h-5 border-2 rounded-md checked:bg-blue-500"
+              onCheckedChange={() => toggleTodo(todo.id)}
+              className="h-5 w-5"
             />
             <span
               className={`flex-1 ${
-                todo.isCompleted ? 'line-through text-gray-400' : ''
+                todo.isCompleted ? 'line-through text-muted-foreground' : ''
               }`}
             >
               {todo.content}
             </span>
-            <button
+            <Button
+              variant="ghost"
+              size="icon"
+              className="opacity-0 group-hover:opacity-100"
               onClick={() => deleteTodo(todo.id)}
-              className="p-1 text-red-500 hover:bg-red-50 rounded-md"
             >
-              <Trash2 className="w-5 h-5" />
-            </button>
+              <Trash2 className="h-4 w-4 text-destructive" />
+            </Button>
           </li>
         ))}
       </ul>

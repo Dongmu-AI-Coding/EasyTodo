@@ -25,15 +25,15 @@ export const ActivityHeatmap = () => {
   );
 
   const getColor = (rate: number) => {
-    if (rate === 0) return 'bg-gray-100';
-    if (rate <= 0.25) return 'bg-green-100';
-    if (rate <= 0.5) return 'bg-green-300';
-    if (rate <= 0.75) return 'bg-green-500';
-    return 'bg-green-700';
+    if (rate === 0) return 'bg-muted';
+    if (rate <= 0.25) return 'bg-emerald-200 dark:bg-emerald-900';
+    if (rate <= 0.5) return 'bg-emerald-300 dark:bg-emerald-800';
+    if (rate <= 0.75) return 'bg-emerald-400 dark:bg-emerald-700';
+    return 'bg-emerald-500 dark:bg-emerald-600';
   };
 
   return (
-    <div className="w-full p-4 bg-white rounded-lg shadow-md">
+    <div className="w-full p-6 bg-card rounded-lg border shadow-sm">
       <h2 className="text-xl font-bold mb-4">活动记录</h2>
       <div className="grid grid-cols-[repeat(auto-fill,20px)] gap-1">
         {dates.map((date) => {
@@ -42,7 +42,7 @@ export const ActivityHeatmap = () => {
           return (
             <div
               key={dateStr}
-              className={`w-5 h-5 rounded-sm ${getColor(rate)}`}
+              className={`w-5 h-5 rounded-sm transition-colors ${getColor(rate)}`}
               title={`${dateStr}: ${Math.round(rate * 100)}% 完成`}
             />
           );
