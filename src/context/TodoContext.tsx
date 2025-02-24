@@ -20,12 +20,12 @@ export function TodoProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem('todos', JSON.stringify(todos));
   }, [todos]);
 
-  const addTodo = (content: string, type: TodoType) => {
+  const addTodo = (content: string, type: TodoType, createdAt?: string) => {
     const newTodo: Todo = {
       id: Date.now().toString(),
       content,
       isCompleted: false,
-      createdAt: format(new Date(), 'yyyy-MM-dd'),
+      createdAt: createdAt || format(new Date(), 'yyyy-MM-dd'),
       type,
     };
     setTodos((prev) => [...prev, newTodo]);

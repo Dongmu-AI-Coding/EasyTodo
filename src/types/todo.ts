@@ -16,7 +16,7 @@ export interface DailyRecord {
 
 export interface TodoContextType {
   todos: Todo[];
-  addTodo: (content: string, type: TodoType) => void;
+  addTodo: (content: string, type: TodoType, createdAt?: string) => void;
   toggleTodo: (id: string) => void;
   deleteTodo: (id: string) => void;
   getDailyRecords: () => DailyRecord[];
